@@ -14,9 +14,7 @@ app.get('/', function (req, res) {
      });
 });
 
-app.post('/', function (req, res) {
-     var fname = req.body.fname;
-     console.log(fname);
+app.post('/', async function (req, res) {
      MongoClient.connect("mongodb://localhost:27042", { useUnifiedTopology: true }, function (err, client) {
           if (err) {
                console.log('connection failed.');
@@ -32,20 +30,18 @@ app.post('/', function (req, res) {
                     validated: 'in progress',
                     admin: false
                };
-               console.log(student);
-               db.collection("students").insertOne(student, function (err, res) {
+               db.collection("students").insertOne(student, function (err, resultat) {
                     if (err) {
                          console.log('Failed to save the collection');
+                         res.send('Failed to save the collection');
                     } else {
                          console.log('Collection saved.');
                          client.close();
+                         res.send('Collection saved.');
                     }
                });
           }
      });
-
-     res.send('idk kev');
-
 });
 
 
