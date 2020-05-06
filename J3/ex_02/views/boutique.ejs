@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boutique</title>
+</head>
+
+<body>
+    <ul>
+        <% products.forEach(function(product) { %>
+        <li><span>Title : </span><a href="boutique/<%= product.id %>"><%= product.title %></a>&nbsp;<span>Price : </span><a href="<%= product.id %>"><%= product.price %> euros</a></li>
+        <% }) %>
+    </ul>
+</body>
+
+</html>
