@@ -28,20 +28,46 @@ app.get('/login', function (req, res) {
 });
 
 app.get('/profile', isAuthenticated, function (req, res) {
-    res.render('profile', { login: sess.user.login });
+    if (req.session.user.admin == true) {
+        res.render('profile', { login: sess.user.login, admin: true });
+    } else {
+        res.render('profile', { login: sess.user.login });
+    }
 });
 
 app.get('/boutique', isAuthenticated, function (req, res) {
     productModel.find({}, (err, resp) => {
-        res.render('boutique', {'products': resp});
+        res.render('boutique', { 'products': resp });
     });
 });
 
-app.get('/boutique/:id' , isAuthenticated, function(req, res) {
+app.get('/boutique/:id', isAuthenticated, function (req, res) {
     var id = req.params.id;
     productModel.findById(id, (err, resp) => {
-        console.log(resp);
-        res.render('product', {'product': resp});
+        res.render('product', { 'product': resp });
+    });
+});
+
+app.get('/admin', isAdmin, function(req, res) {
+    res.render('admin');
+})
+
+app.get('/admin/add', isAdmin, function (req, res) {
+    res.render('addproduct.ejs');
+});
+
+app.post('/admin/add', function (req, res) {
+    const product = new productModel({
+        title: req.body.title,
+        price: req.body.price,
+        desc: req.body.description
+    });
+    product.save({}, (err, resp) => {
+        if (err) {
+            res.status(400).render('addproduct', {'errormsg' : 'an error occured'});
+        } else {
+            res.render('addproduct', { 'success': true });
+        }
     });
 });
 
@@ -83,6 +109,15 @@ app.post('/login', function (req, res) {
 function isAuthenticated(req, res, next) {
     if (req.session.user)
         return next();
+    res.redirect('/login');
+}
+
+function isAdmin(req, res, next) {
+    if (req.session.user) {
+        if (req.session.user.admin == true) {
+            return next();
+        }
+    }
     res.redirect('/login');
 }
 

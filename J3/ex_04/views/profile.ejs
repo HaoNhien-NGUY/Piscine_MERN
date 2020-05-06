@@ -8,5 +8,8 @@
 <body>
     <h1>Welcome <%= login %></h1>
     <a href="/boutique">Boutique</a>
+    <%if (typeof admin !== 'undefined') { %>
+        <br><a href="/admin/add">Admin add product</a><br>
+    <% } %>
 </body>
 </html>
