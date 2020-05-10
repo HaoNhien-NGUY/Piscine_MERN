@@ -20,7 +20,6 @@ export default class Home extends Component {
     }
 
     deleteHandler(i, e) {
-        e.preventDefault();
 
     }
 
@@ -33,7 +32,7 @@ export default class Home extends Component {
                 <p>Author : {authorname}</p>
                 <div className="mb-5">
                     <p>{content}</p>
-                    {this.state.isOwned ? (<button onClick={this.deleteHandler.bind(this)} className="btn btn-danger">Delete</button>) : null}
+                    {this.state.isOwned ? (<button onClick={this.deleteHandler} className="btn btn-danger">Delete</button>) : null}
                 </div>
             </div>
         )
