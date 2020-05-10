@@ -22,7 +22,7 @@ router.get('/:id', function (req, res) {
 });
 
 router.get('/details/:id', function (req, res) {
-    postModel.findById(req.params.id).populate("author").then(resp => {
+    postModel.findById(req.params.id).populate("author").populate("comments").then(resp => {
         res.status(200).json({
             post: resp
         })

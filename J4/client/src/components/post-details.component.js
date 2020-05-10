@@ -81,35 +81,36 @@ export default class Home extends Component {
                 this.state.comment,
                 this.state.post.post._id
             )
-            // .then(
-            //     response => {
-            //         this.setState({
-            //             message: response.data.message,
-            //             successful: true
-            //         });
-            //     },
-            //     error => {
-            //         const resMessage =
-            //             (error.response &&
-            //                 error.response.data &&
-            //                 error.response.data.message) ||
-            //             error.message ||
-            //             error.toString();
+                .then(
+                    response => {
+                        this.setState({
+                            message: response.data.message,
+                            successful: true
+                        });
+                        document.location.reload();
+                    },
+                    error => {
+                        const resMessage =
+                            (error.response &&
+                                error.response.data &&
+                                error.response.data.message) ||
+                            error.message ||
+                            error.toString();
 
-            //         this.setState({
-            //             successful: false,
-            //             message: resMessage
-            //         });
-            //     }
-            // );
+                        this.setState({
+                            successful: false,
+                            message: resMessage
+                        });
+                    }
+                );
         }
 
     }
 
     render() {
         if (this.state.post) {
-            var { title, content, authorname, createdAt } = this.state.post.post;
-            // console.log(this.state.post.post._id);
+            var { title, content, authorname, createdAt, comments } = this.state.post.post;
+            console.log(comments);
         }
         return (
             <div>
@@ -125,6 +126,20 @@ export default class Home extends Component {
                         </div>
                     ) : null}
                 </div>
+                <div className="comments col-12 my-5">
+                    {comments ? (
+                        comments.map((comment, i) => {
+                            return (
+                                <div className="card card-container p-3">
+                                    <h3>{comment.authorname}</h3>
+                                    <span>{comment.createdAt}</span>
+                                    <p className="mt-4">{comment.content}</p>
+                                </div>
+                            )
+                        })
+                    ) : null}
+                </div>
+
                 <div className="col-12 mt-5">
                     <h3 className="mb-4">Comment</h3>
                     <Form
