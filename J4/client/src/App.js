@@ -8,6 +8,8 @@ import AuthService from "./services/auth.service";
 import Login from "./components/login.component";
 import Register from "./components/register.component";
 import Home from "./components/home.component";
+import Blog from "./components/blog.component";
+import PostDetail from "./components/post-details.component";
 
 class App extends Component {
   constructor(props) {
@@ -24,7 +26,7 @@ class App extends Component {
 
     if (user) {
       this.setState({
-        currentUser: AuthService.getCurrentUser()
+        currentUser: user
       });
     }
   }
@@ -35,7 +37,6 @@ class App extends Component {
 
   render() {
     const { currentUser } = this.state;
-
     return (
       <Router>
         <div>
@@ -92,6 +93,9 @@ class App extends Component {
               <Route exact path={["/", "/home"]} component={Home} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
+              <Route path="/:login" exact component={Blog} />
+              <Route path="/:login/:postid" exact component={PostDetail} />
+              {/* <Route path="/search/user/posts/" exact component={SearchPost} /> */}
             </Switch>
           </div>
         </div>
