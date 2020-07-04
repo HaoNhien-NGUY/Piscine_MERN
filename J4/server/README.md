@@ -1,6 +1,7 @@
 # Piscine MERN - Jour 4
 
-Quatrième jour de la piscine d'introduction à la stack MERN.
+Quatrième jour de la piscine d'introduction à la stack MERN.  
+Création d'un site de blogs.
 
 Côté serveur de ma première application Node.js / Express.js avec communication avec une base de bonnée MongoDB.  
 
